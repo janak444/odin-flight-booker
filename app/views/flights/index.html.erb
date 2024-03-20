@@ -1,0 +1,22 @@
+<h1>Flights</h1>
+  <%= form_with url: "/", method: :get do |form| %>
+  <%= form.label :query, "Search for Flights:" %><br><br>
+  <%= form.label :select, "options for Departure Airport:" %>
+  <%= form.select :departure_code, @departure_list %><br><br>
+  <%= form.label :select, "Options for Arrival Airport:" %>
+  <%= form.select :arrival_code, @arrival_list %><br><br>
+  <%= form.label :select, "Options for Number of Passengers:" %>
+  <%= form.select :num_tickets, @number_of_passenger %><br><br>
+  <%= form.label :select, "Options for date and time of flight:" %>
+  <%= form.select :flight_date, @flight_date_list%><br><br>
+  <%= form.submit "search"%>
+<% end %>
+<%= form_with url: "/flights/new", method: :get do |form| %>
+  <% @flights.each do |match_flight|%>
+  <%= form.radio_button :flight_id, match_flight.id %>  
+    <p>Arrival Airport : <%= match_flight.arrival_airport.airport_code%> </p>
+    <p>Departure Airport : <%= match_flight.departure_airport.airport_code%> </p>
+    <p>Time of flights: <%= match_flight.start_datetime.strftime('%H:%M:%S') %> </p>
+  <%end%>
+  <%= form.submit "submit"%>
+<%end%>
