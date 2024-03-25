@@ -1,0 +1,18 @@
+
+<%= form_with model: @booking do |booking_form| %>
+ <h1>Flight Information</h1>
+ <p>Arrival Airport:<%= @flight.arrival_airport.airport_code%></p>
+ <p>Departure Airport:<%= @flight.departure_airport.airport_code%></p>
+ <p>Flight Date and Time:<%= @flight.start_datetime.strftime('%Y-%m-%d %H:%M:%S')%></p>
+ <%= booking_form.hidden_field :flight_id, value: @flight.id%> 
+ <h1>Passenger Informations</h1>
+  <% @number_of_passengers.to_i.times do |i| %>
+      <p>Insert the passenger number <%= i+1 %> information</p>
+      <%= booking_form.fields_for :passengers, @passenger do |passenger_fields| %>
+        Name: <%= passenger_fields.text_field :name %><br><br>
+        Email: <%= passenger_fields.text_field :email%><br><br>
+    <% end %>
+  <% end %>
+  <%= booking_form.hidden_field :number_of_passengers, value: @number_of_passengers%> 
+ <%= booking_form.submit "submit"%> 
+<% end %>
